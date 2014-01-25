@@ -19,7 +19,7 @@ function extend($orig_array, $attrib_name, $query, $query_params){
 }
 
 function getAll(){
-	$ids = Database::prepareAndExecute("SELECT id FROM folders WHERE 1");
+	$ids = Database::prepareAndExecute("SELECT id FROM composers WHERE 1");
 	$ret = array();
 	foreach($ids AS $id){
 		$ret[]=getOne($id[0]);
@@ -33,4 +33,4 @@ if(!isset($_GET["id"])){
 	$ret = getOne($_GET["id"]);
 }
 
-echo json_encode($ret);
+echo json_encode($ret);mys
