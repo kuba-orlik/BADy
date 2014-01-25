@@ -1,0 +1,51 @@
+  * {
+  margin: 0px;
+  padding: 0px;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+  display: block;
+}
+
+
+
+/* body
+-----------------------------------------------------------------------------*/
+body {
+  font: 12px Verdana;
+  background-color: #F0F0F2;
+  width: 100%;
+}
+
+
+
+.content{
+  position: absolute;
+  top: 24px;
+  left: 300px;
+
+}
+
+.new_line { 
+  padding: 2px 0; 
+}
+
+
+.layer{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background-color: #FFFFFF;
+  width: 700px;
+  height: 400px;
+  opacity: 1;
+  border: 16px solid #FFFFFF;
+  border-radius: 24px;
+  -webkit-border-radius: 24px;
+  -moz-border-radius: 24px;
+  -ms-border-radius: 24px;
+  -o-border-radius: 24px;
+  box-shadow: 0px -2px 51px 0px #D9D9D9;
+  -webkit-box-shadow: 0px -2px 51px 0px #D9D9D9;
+  -moz-box-shadow: 0px -2px 51px 0px #D9D9D9;
+  -ms-box-shadow: 0px -2px 51px 0px #D9D9D9;
+  -o-box-shadow: 0px -2px 51px 0px #D9D9D9;
+}
