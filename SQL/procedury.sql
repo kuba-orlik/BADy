@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2014 at 04:25 PM
+-- Generation Time: Jan 25, 2014 at 06:14 PM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -26,32 +26,39 @@ DELIMITER $$
 --
 -- Procedures
 --
-DROP PROCEDURE IF EXISTS `category_getPieces`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `category_getPieces`(IN `param` INT)
     READS SQL DATA
-SELECT * FROM pieces WHERE category_id = param$$
+SELECT * FROM pieces WHERE category_id=param OR category_hasParent(category_id, param)$$
 
-DROP PROCEDURE IF EXISTS `composer_getPieces`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `composer_getPieces`(IN `composer_idL` INT)
     MODIFIES SQL DATA
 SELECT * FROM pieces WHERE composer_id=composer_idL$$
 
-DROP PROCEDURE IF EXISTS `group_getFolders`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `file_getPiece`(IN `param` INT)
+    NO SQL
+SELECT * FROM pieces WHERE id=(SELECT piece_id FROM files WHERE id=param)$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `file_getVersions`(IN `param` INT)
+    READS SQL DATA
+SELECT * FROM fileversions WHERE file_id=param$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `group_getFolders`(IN `group_idL` INT)
     READS SQL DATA
 SELECT folders.id AS id, folders.name AS name FROM foldergroup LEFT JOIN folders ON foldergroup.folder_id = folders.id WHERE foldergroup.group_id=group_idL$$
 
-DROP PROCEDURE IF EXISTS `group_getUsers`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `group_getUsers`(IN `group_idL` INT)
     READS SQL DATA
 SELECT * FROM users WHERE id IN (
 	SELECT user_id FROM usergroup WHERE group_id=group_idL
 )$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `piece_getFiles`(IN `param` INT)
+    READS SQL DATA
+SELECT * FROM files WHERE piece_id=param$$
+
 --
 -- Functions
 --
-DROP FUNCTION IF EXISTS `category_hasParent`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `category_hasParent`(`category_id` INT, `parent_idL` INT) RETURNS tinyint(1)
     READS SQL DATA
 BEGIN
@@ -77,5 +84,4 @@ return ret;
 END$$
 
 DELIMITER ;
-
 
