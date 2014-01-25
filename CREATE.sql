@@ -1,3 +1,7 @@
+CREATE DATABASE spiewnik;
+
+USE spiewnik;
+
 
 CREATE TABLE Users(
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -50,7 +54,7 @@ CREATE TABLE Categories(
 	id int PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(50)  NOT NULL,
 	parent_id INT,
-	FOREIGN KEY parent_id REFERENCES Categories(id)
+	FOREIGN KEY (parent_id) REFERENCES Categories(id)
 );
 
 CREATE TABLE Pieces(
@@ -74,8 +78,8 @@ CREATE TABLE FolderFile(
 	file_id INT,
 	FOREIGN KEY (file_id) REFERENCES Files(id),
 	folder_id INT,
+	`order` INT,
 	FOREIGN KEY (folder_id) REFERENCES Folders(id),
-	order INT,
 	PRIMARY KEY (file_id, folder_id)
 );
 
