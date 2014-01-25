@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html>
- 	<link rel="stylesheet" type="text/css" href="../style.css" />
 <body>
-
-
-<div class="content">
-<div class="layer">
-
-<div class="new_line">
 
 <div ng-controller='dataController' ng-init="setSource('api/groups.php')">
 	<p>lista grup</p>
@@ -20,9 +13,6 @@
 		<th>folders</th>
 	</tr>
 		
-
-
-
 	<!-- new row -->
 	<tr ng-repeat='group in data'>
 	<td>{{group.id}}</td>
@@ -50,9 +40,5 @@
 
 	</table>
 
-
-	</div>
-	</div>
-	</div>
 </body>
 </html>
