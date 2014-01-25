@@ -2,60 +2,46 @@
 <html>
 <body>
 
-<p>lista grup</p>
-<table border="1" style="border-collapse:collapse;">
-<!-- general header row -->
-<tr>
-	<th>group_id</th>
-	<th>group_name</th>
-	<th>users</th>
-	<th>folders</th>
-</tr>
-	
-<!-- new row -->
-<tr>
-<td>1</td>
-<td>Mathes</td>
-<td>
-	<table>
-		<!-- user 1 -->
-		<tr>
-			<td>Arkadiusz</td>
-		</tr>
-		<!-- user 2 -->
-		<tr>
-			<td>Kuba</td>
-		</tr>
-		<tr>
-			<td>Fajny chlopak</td>
-		</tr>
-		<tr>
-			<td>noname</td>
-		</tr>
+<div ng-controller='dataController' ng-init="setSource('api/groups.php')">
+	<p>lista grup</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+		<th>group_id</th>
+		<th>group_name</th>
+		<th>users</th>
+		<th>folders</th>
+	</tr>
+		
+
+
+
+	<!-- new row -->
+	<tr ng-repeat='group in data'>
+	<td>{{group.id}}</td>
+	<td>{{group.name}}</td>
+	<td>
+		<table>
+			<!-- user 1 -->
+			<tr ng-repeat='user in group.users'>
+				<td>{{user.username}}</td>
+			</tr>
+
+		</table>
+	</td>
+	<td>
+		<table>
+			<!-- folder 1 -->
+			<tr ng-repeat='folder in group.folders'>
+				<td>{{folder.name}}</td>
+			</tr>
+
+		</tabl
+	</td>
+	</tr>
+
 
 	</table>
-</td>
-<td>
-	<table>
-		<!-- new folder-->
-		<tr>
-			<td>folder1</td>
-		</tr>
-		<tr>
-			<td>folder2</td>
-		</tr>
-		<tr>
-			<td>folder3</td>
-		</tr>
-		<tr>
-			<td>folder4</td>
-		</tr>
-	</table>
-</td>
-</tr>
 
-
-</table>
-
-</body>
-</html>
+	</body>
+	</html>

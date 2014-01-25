@@ -2,7 +2,7 @@ var app = angular.module("app", ['ngResource', 'ngRoute']).config(
 	['$routeProvider', function($routeProvider){
 		$routeProvider
 			.when('/users', {templateUrl: 'lists/users.html'})
-			.when('/composers', {templateUrl: 'lists/composers.html'})
+			.when('/groups', {templateUrl: 'lists/groups.html'})
 			.otherwise({redirectTo: '/users'});
 	}]
 );	;
