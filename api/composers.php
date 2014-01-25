@@ -33,4 +33,4 @@ if(!isset($_GET["id"])){
 	$ret = getOne($_GET["id"]);
 }
 
-echo json_encode($ret);mys
+echo json_encode($ret);
