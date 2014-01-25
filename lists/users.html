@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <!DOCTYPE html>
 <html>
@@ -59,10 +60,29 @@
 		<tr>
 			<td>Druga</td>
 		</tr>
+=======
+<div ng-controller='dataController' ng-init="setSource('api/users.php')">
+	<p>lista uzytkownikow</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+	  <th>user</th>
+	  <th>rank</th>
+	  <th>group</th>
+	</tr>
+	<tr ng-repeat='user in data'>
+		<td>{{user.username}}</td>
+		<td>{{user.rank}}</td>
+		<td>
+			<table>
+				<tr ng-repeat='group in user.groups'>
+					<td>{{group.group_id}}</td>
+					<td>{{group.group_name}}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+>>>>>>> angular
 	</table>
-</td>
-</tr>
-</table>
 
-</body>
-</html>
+</div>
