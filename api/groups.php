@@ -1,15 +1,14 @@
 <?php
-
 include_once("../classes/database.php");
 
 function getOne($id){
 	$group = Database::prepareAndExecute("SELECT * FROM groups WHERE id=?", array($id));
-	$users = Database::prepareAndExecute("SELECT user_id, username FROM groups LEFT JOIN usergroup on groups.id=usergroup.group_id LEFT JOIN users ON users.id=usergroup.user_id WHERE group_id=?", array($id));
+	$users = Database::prepareAndExecute("CALL group_getUsers(?)", array($id));
 	$group[0]['users'] = array();
 	foreach($users AS $user){
 		$group[0]['users'][]=$user;
 	}
-	$query = "SELECT * FROM foldergroup LEFT JOIN folders ON foldergroup.folder_id = folders.id WHERE foldergroup.group_id=?";
+	$query = "call group_getFolders(?)";
 	$group = extend($group, 'folders', $query, array($id));
 	return $group[0];
 }
