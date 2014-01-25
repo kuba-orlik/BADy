@@ -2,40 +2,33 @@
 <html>
 <body>
 
-<p>lista utworow</p>
-<table border="1" style="border-collapse:collapse;">
-<!-- general header row -->
-<tr>
-  <th>id</th>
-  <th>tytul</th>
-  <th>composer_id</th>
-  <th>category_id</th>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>1</td>
-<td>Power Hungry Fool</td>
-<td>1</td>
-<td>2</td>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>2</td>
-<td>Birabiruto</td>
-<td>2</td>
-<td>3</td>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>3/td>
-<td>Super Mario Bros</td>
-<td>2</td>
-<td>3</td>
-</tr>
-</table>
+<div ng-controller='dataController' ng-init="setSource('api/pieces.php')">
+	<p>categories</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+	  <th>id</th>
+	  <th>tytul</th>
+	  <th>composer_id</th>
+	  <th>category_id</th>
+	</tr>
+	<tr ng-repeat='piece in data'>
+		<td>{{piece.id}}</td>
+		<td>{{piece.tytul}}</td>
+		<td>{{piece.composer_id}}</td>
+		<td>{{piece.category_id}}</td>
+		<td>
+			<table>
+				<tr ng-repeat='file in piece.files'>
+					<td>{{file.id}}</td> 
+					<td>{{file.piece_id}}</td>
+					<td>{{file.name}}</td>
+					<td>{{file.type}}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
 
 </body>
 </html>

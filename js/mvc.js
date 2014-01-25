@@ -6,6 +6,8 @@ var app = angular.module("app", ['ngResource', 'ngRoute']).config(
 			.when('/categories', {templateUrl: 'lists/categories.html'})
 			.when('/composers', {templateUrl: 'lists/composers.html'})
 			.when('/folders', {templateUrl: 'lists/folders.html'})
+			.when('/files', {templateUrl: 'lists/files.html'})
+			.when('/pieces', {templateUrl: 'lists/pieces.html'})			
 			.otherwise({redirectTo: '/users'});
 	}]
 );	;

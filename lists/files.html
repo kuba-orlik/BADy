@@ -2,40 +2,44 @@
 <html>
 <body>
 
-<p>files</p>
-<table border="1" style="border-collapse:collapse;">
-<!-- general header row -->
-<tr>
-  <th>id</th>
-  <th>piece_id</th>
-  <th>name</th>
-  <th>type</th>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>1</td>
-<td>1</td>
-<td>piece1.pdf</td>
-<td>pdf</td>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>2</td>
-<td>2</td>
-<td>piece2.midi</td>
-<td>MIDI</td>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>3</td>
-<td>3</td>
-<td>piece3.txt</td>
-<td>txt</td>
-</tr>
-</table>
+<div ng-controller='dataController' ng-init="setSource('api/files.php')">
+	<p>files</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+	  <th>id</th>
+	  <th>piece_id</th>
+	  <th>name</th>
+	  <th>type</th>
+	</tr>
+	<tr ng-repeat='file in data'>
+		<td>{{file.id}}</td>
+		<td>{{file.piece_id}}</td>
+		<td>{{file.name}}</td>
+		<td>{{file.type}}</td>
+		<td>
+			<table>
+				<tr>
+					<td>{{file.piece[0].id}}</td>
+					<td>{{file.piece[0].tytul}}</td>
+					<td>{{file.piece[0].composer_id}}</td>
+					<td>{{file.piece[0].category_id}}</td>
+				</tr>
+			</table>
+			<table>
+				<tr ng-repeat='version in file.versions'>
+					<td>{{version.id}}</td>
+					<td>{{version.file_id}}</td>
+					<td>{{version.download_amount}}</td>
+					<td>{{version.location}}</td>
+					<td>{{version.time_created}}</td>
+					<td>{{version.user_id}}</td>
+					<td>{{version.potwierdzony}}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
 
 </body>
 </html>
