@@ -37,7 +37,7 @@ class Database{
 	}
 
 	private static function log($entry_content){
-		$date = date('m/d/Y h:i:s a', time());
+		$date = date('m/d/Y h:i:s a', time()); 
 		$entry = "$date \t $entry_content \r\n";
 		//file_put_contents(DIR_CLASSES . 'log.txt', $entry, FILE_APPEND);
 	}
