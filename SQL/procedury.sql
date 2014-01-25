@@ -76,4 +76,10 @@ END loop label1;
 return ret;
 END$$
 
+<<<<<<< HEAD
 DELIMITER ;
+=======
+DELIMITER ;
+
+
+>>>>>>> 1e5bcb14ab96bcf631a1ef1100bc7fc602ad8523
