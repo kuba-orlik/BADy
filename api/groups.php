@@ -1,5 +1,5 @@
 <?php
-phpinfo();
+
 include_once("../classes/database.php");
 
 function getOne($id){
