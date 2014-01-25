@@ -3,7 +3,9 @@
 include_once("../classes/database.php");
 
 function getOne($id){
-	$unit = Database::prepareAndExecute("SELECT * FROM folders WHERE id=?", array($id));
+	$unit = Database::prepareAndExecute("SELECT * FROM composers WHERE id=?", array($id));
+	$query = "CALL composer_getPieces(?)";
+	$unit = extend($unit, "pieces", $query, array($id));
 	return $unit[0];
 }
 

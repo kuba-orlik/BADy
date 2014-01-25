@@ -1,5 +1,5 @@
 <?php
-
+phpinfo();
 include_once("../classes/database.php");
 
 function getOne($id){
@@ -9,6 +9,8 @@ function getOne($id){
 	foreach($users AS $user){
 		$group[0]['users'][]=$user;
 	}
+	$query = "SELECT * FROM foldergroup LEFT JOIN folders ON foldergroup.folder_id = folders.id WHERE foldergroup.group_id=?";
+	$group = extend($group, 'folders', $query, array($id));
 	return $group[0];
 }
 
@@ -19,6 +21,15 @@ function getAll(){
 		$ret[]=getOne($id[0]);
 	}
 	return $ret;
+}
+
+function extend($orig_array, $attrib_name, $query, $query_params){
+	$units = Database::prepareAndExecute($query, $query_params);
+	$orig_array[0][$attrib_name] = array();
+	foreach($units AS $user){
+		$orig_array[0][$attrib_name][]=$user;
+	}
+	return $orig_array;
 }
 
 if(!isset($_GET["id"])){

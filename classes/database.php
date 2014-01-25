@@ -23,7 +23,8 @@ class Database{
 		if(self::$connected){
 			return $self::$pdo;
 		}else{
-			$db = new PDO('mysql:host=127.0.0.1;dbname=' . self::$database_name . ';charset=utf8', self::$username, self::$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+			//$db = new PDO('mysql:host=127.0.0.1;dbname=' . self::$database_name . ';charset=utf8', self::$username, self::$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+			$db = new PDO('mysql:host=localhost;dbname=' . self::$database_name . ';charset=utf8', self::$username, self::$password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 			return $db;			
 		}
 	}
