@@ -2,35 +2,33 @@
 <html>
 <body>
 
-<p>categories</p>
-<table border="1" style="border-collapse:collapse;">
-<!-- general header row -->
-<tr>
-  <th>id</th>
-  <th>name</th>
-  <th>parent_id</th>
-</tr>
+<div ng-controller='dataController' ng-init="setSource('api/categories.php')">
+	<p>categories</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+	  <th>id</th>
+	  <th>name</th>
+	  <th>parent_id</th>
+	  <th>utwory</th>
+	</tr>
+	<tr ng-repeat='category in data'>
+		<td>{{category.id}}</td>
+		<td>{{category.name}}</td>
+		<td>{{category.parent_id}}</td>
 
-<!-- new row -->
-<tr>
-<td>1</td>
-<td>Wg Nastroju</td>
+		<td>
+			<table>
+				<tr ng-repeat='piece in category.pieces'>
+					<td>{{piece.id}}</td> 
+					<td>{{piece.tytul}}</td>
+					<td>{{piece.composer_id}}</td>
+					<td>{{piece.category_id}}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
 
-</tr>
-
-<!-- new row -->
-<tr>
-<td>2</td>
-<td>Wesołe</td>
-
-</tr>
-
-<!-- new row -->
-<tr>
-<td>3</td>
-<td>Smutne</td>
-</tr>
-</table>
-
-</body>
-</html>
+	</body>
+	</html>

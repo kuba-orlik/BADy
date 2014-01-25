@@ -2,34 +2,19 @@
 <html>
 <body>
 
-<p>lista folderow</p>
-<table border="1" style="border-collapse:collapse;">
-<!-- general header row -->
-<tr>
-  <th>id</th>
-  <th>name</th>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>1</td>
-<td>Na koncert z gier video</td>
-
-</tr>
-
-<!-- new row -->
-<tr>
-<td>2</td>
-<td>Na Buritosto z serem</td>
-
-</tr>
-
-<!-- new row -->
-<tr>
-<td>3</td>
-<td>Na grzanki z kakao</td>
-</tr>
-</table>
+<div ng-controller='dataController' ng-init="setSource('api/folders.php')">
+	<p>folders</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+	  <th>id</th>
+	  <th>name</th>
+	</tr>
+	<tr ng-repeat='folder in data'>
+		<td>{{folder.id}}</td>
+		<td>{{folder.name}}</td>
+	</tr>
+	</table>
 
 </body>
 </html>

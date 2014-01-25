@@ -3,6 +3,9 @@ var app = angular.module("app", ['ngResource', 'ngRoute']).config(
 		$routeProvider
 			.when('/users', {templateUrl: 'lists/users.html'})
 			.when('/groups', {templateUrl: 'lists/groups.html'})
+			.when('/categories', {templateUrl: 'lists/categories.html'})
+			.when('/composers', {templateUrl: 'lists/composers.html'})
+			.when('/folders', {templateUrl: 'lists/folders.html'})
 			.otherwise({redirectTo: '/users'});
 	}]
 );	;

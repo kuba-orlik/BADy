@@ -2,36 +2,30 @@
 <html>
 <body>
 
-<p>composers</p>
-<table border="1" style="border-collapse:collapse;">
-<!-- general header row -->
-<tr>
-  <th>id</th>
-  <th>name</th>
-  <th>pieces</th>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>1</td>
-<td>Jan Orlik</td>
-<td>1</td>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>2</td>
-<td>Fryderyk Chopin</td>
-<td>4</td>
-</tr>
-
-<!-- new row -->
-<tr>
-<td>3</td>
-<td>Jan Sebastian Bach</td>
-<td>2</td>
-</tr>
-</table>
+<div ng-controller='dataController' ng-init="setSource('api/composers.php')">
+	<p>composers</p>
+	<table border="1" style="border-collapse:collapse;">
+	<!-- general header row -->
+	<tr>
+	  <th>id</th>
+	  <th>name</th>
+	  <th>utwory</th>
+	</tr>
+	<tr ng-repeat='composer in data'>
+		<td>{{composer.id}}</td>
+		<td>{{composer.name}}</td>
+		<td>
+			<table>
+				<tr ng-repeat='piece in composer.pieces'>
+					<td>{{piece.id}}</td> 
+					<td>{{piece.tytul}}</td>
+					<td>{{piece.composer_id}}</td>
+					<td>{{piece.category_id}}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
 
 </body>
 </html>
