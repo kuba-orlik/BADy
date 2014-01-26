@@ -1,0 +1,38 @@
+<div ng-controller="dataController" ng-init='getSingle("api/files.php")'>
+	<h1>File: {{data.name}}</h1>
+	<table>
+		<tr>
+			<td>
+				title:
+			</td>
+			<td>
+				{{data.name}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				piece:
+			</td>
+			<td>
+				<a href="#/pieces/{{data.piece[0].id}}">{{data.piece[0].tytul}}</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				versions
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="version in data.versions"> 
+						<td>
+							{{version.location}}
+						</td>
+						<td>
+							{{version.time_created}}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>

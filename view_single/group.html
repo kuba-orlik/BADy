@@ -23,5 +23,37 @@
 				</table>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				folders:
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="folder in data.folders"> 
+						<td>
+							<a href="#/folder/{{folder.id}}">{{folder.name}}</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 	</table>
+	<h2>
+		Assign user:
+	</h2>
+	<div ng-controller="dataController" ng-init="setSource('api/users.php'); console.log('lol'); console.log(params); ">	
+		<select ng-model='params.user_id'>
+			<option ng-repeat='user in data' value="{{user.id}}">{{user.username}}</option>
+		</select>	
+		<input type='submit' ng-click='params.group_id = $parent.data.id; post("api/actions/assign_user.php", params)'>
+	</div>	
+	<h2>
+		Remove user:
+	</h2>
+	<div ng-controller="dataController" ng-init="setSource('api/users.php'); console.log('lol'); console.log(params); ">	
+		<select ng-model='params.user_id'>
+			<option ng-repeat='user in data' value="{{user.id}}">{{user.username}}</option>
+		</select>	
+		<input type='submit' ng-click='params.group_id = $parent.data.id; post("api/actions/remove_user.php", params)'>
+	</div>	
 </div>

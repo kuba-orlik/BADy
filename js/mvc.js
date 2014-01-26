@@ -8,8 +8,10 @@ var app = angular.module("app", ['ngResource', 'ngRoute']).config(
 			.when('/categories', {templateUrl: 'lists/categories.html'})
 			.when('/categories/:id', {templateUrl: 'view_single/category.html'})
 			.when('/composers', {templateUrl: 'lists/composers.html'})
+			.when('/composers/:id', {templateUrl: 'view_single/composer.html'})
 			.when('/folders', {templateUrl: 'lists/folders.html'})
 			.when('/files', {templateUrl: 'lists/files.html'})
+			.when('/files/:id', {templateUrl: 'view_single/file.html'})			
 			.when('/pieces', {templateUrl: 'lists/pieces.html'})
 			.when('/pieces/:id', {templateUrl: 'view_single/piece.html'})
 			.otherwise({redirectTo: '/users'});
@@ -19,6 +21,8 @@ var app = angular.module("app", ['ngResource', 'ngRoute']).config(
 app.controller('dataController', ['$http', '$scope', '$routeParams', function($http, $scope, $routeParams){
 
 	$scope.source;
+
+	$scope.params = {};
 
 	$scope.setSource = function(source){
 		$scope.source = source;
@@ -34,4 +38,16 @@ app.controller('dataController', ['$http', '$scope', '$routeParams', function($h
 		});
 	}
 
+	$scope.post = function(url, params){
+		$http.post(url, params).success(function(data){
+			console.log(data);
+			if(data.error==0){
+				location.reload();
+			}else{
+				alert(data.message);
+			}
+		})
+	}
+
 }]);
+

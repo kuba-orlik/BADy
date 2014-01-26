@@ -11,13 +11,14 @@
 	  <th>tytul</th>
 	  <th>composer_id</th>
 	  <th>category_id</th>
-	  <th>files</th>
+	  <!--<th>files</th>-->
 	</tr>
 	<tr ng-repeat='piece in data'>
 		<td>{{piece.id}}</td>
 		<td><a href="#/pieces/{{piece.id}}">{{piece.tytul}}</a></td>
 		<td>{{piece.composer_id}}</td>
 		<td>{{piece.category_id}}</td>
+		<!--
 		<td>
 			<table>
 				<tr ng-repeat='file in piece.files'>
@@ -27,7 +28,7 @@
 					<td>{{file.type}}</td>
 				</tr>
 			</table>
-		</td>
+		</td>-->
 	</tr>
 	</table>
 

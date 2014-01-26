@@ -7,6 +7,10 @@ function getOne($id){
 	$unit = Database::prepareAndExecute("SELECT * FROM pieces WHERE id=?", array($id));
 	$query = "CALL piece_getFiles(?)";
 	$unit = extend($unit, "files", $query, array($id));
+	$query = "CALL piece_getComposer(?)";
+	$unit = extend($unit, "composer", $query, array($id));
+	$query = "CALL piece_getCategory(?)";
+	$unit = extend($unit, "category", $query, array($id));
 	return $unit[0];
 }
 

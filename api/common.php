@@ -37,6 +37,9 @@ function handleRequest(){
 		}	
 	}
 	if($method=="POST"){
+		if(stripos($_SERVER["CONTENT_TYPE"], "application/json") === 0) {
+			$_POST = json_decode(file_get_contents("php://input"), true);
+		}
 		$params = parametrize($_POST);
 		try{
 			$ret = handlePost($params);			

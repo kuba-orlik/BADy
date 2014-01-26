@@ -1,11 +1,5 @@
 <div ng-controller="dataController" ng-init='getSingle("api/pieces.php")'>
 	<h1>View piece {{data.tytul}}</h1>
-	<a href="#/composers/{{data.composer_id}}">
-	 <h2>view composer</h2>
-	</a>
-	<a href="#/categories/{{data.category_id}}">
-	 <h2>view category</h2>
-	</a>
 	<table>
 		<tr>
 			<td>
@@ -13,6 +7,22 @@
 			</td>
 			<td>
 				{{data.tytul}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				composer:
+			</td>
+			<td>
+				<a href="#/composers/{{data.composer[0].id}}">{{data.composer[0].name}}</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				category:
+			</td>
+			<td>
+				<a href="#/categories/{{data.category[0].id}}">{{data.category[0].name}}</a>
 			</td>
 		</tr>
 		<tr>

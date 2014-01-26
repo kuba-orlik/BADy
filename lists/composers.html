@@ -13,7 +13,7 @@
 	</tr>
 	<tr ng-repeat='composer in data'>
 		<td>{{composer.id}}</td>
-		<td>{{composer.name}}</td>
+		<td><a href="#/composers/{{composer.id}}">{{composer.name}}</a></td>
 		<td>
 			<table>
 				<tr ng-repeat='piece in composer.pieces'>
