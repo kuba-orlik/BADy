@@ -3,7 +3,7 @@
 <body>
 
 <div ng-controller='dataController' ng-init="setSource('api/groups.php')">
-	<p>lista grup</p>
+	<h2>lista grup</h2>
 	<table border="1" style="border-collapse:collapse;">
 	<!-- general header row -->
 	<tr>
@@ -15,26 +15,26 @@
 		
 	<!-- new row -->
 	<tr ng-repeat='group in data'>
-	<td>{{group.id}}</td>
-	<td>{{group.name}}</td>
-	<td>
-		<table>
-			<!-- user 1 -->
-			<tr ng-repeat='user in group.users'>
-				<td>{{user.username}}</td>
-			</tr>
+		<td>{{group.id}}</td>
+		<td><a href="#/groups/{{group.id}}">{{group.name}}</a></td>
+		<td>
+			<table>
+				<!-- user 1 -->
+				<tr ng-repeat='user in group.users'>
+					<td><a href="#/users/{{user.id}}">{{user.username}}</a></td>
+				</tr>
 
-		</table>
-	</td>
-	<td>
-		<table>
-			<!-- folder 1 -->
-			<tr ng-repeat='folder in group.folders'>
-				<td>{{folder.name}}</td>
-			</tr>
+			</table>
+		</td>
+		<td>
+			<table>
+				<!-- folder 1 -->
+				<tr ng-repeat='folder in group.folders'>
+					<td>{{folder.name}}</td>
+				</tr>
 
-		</tabl
-	</td>
+			</table>
+		</td>
 	</tr>
 
 

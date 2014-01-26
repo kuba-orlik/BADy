@@ -3,7 +3,7 @@
 <body>
 
 <div ng-controller='dataController' ng-init="setSource('api/pieces.php')">
-	<p>categories</p>
+	<h1>Pieces</h1>
 	<table border="1" style="border-collapse:collapse;">
 	<!-- general header row -->
 	<tr>
@@ -11,10 +11,11 @@
 	  <th>tytul</th>
 	  <th>composer_id</th>
 	  <th>category_id</th>
+	  <th>files</th>
 	</tr>
 	<tr ng-repeat='piece in data'>
 		<td>{{piece.id}}</td>
-		<td>{{piece.tytul}}</td>
+		<td><a href="#/pieces/{{piece.id}}">{{piece.tytul}}</a></td>
 		<td>{{piece.composer_id}}</td>
 		<td>{{piece.category_id}}</td>
 		<td>

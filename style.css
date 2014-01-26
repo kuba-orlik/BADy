@@ -7,6 +7,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, 
 }
 
 
+a {
+  color: rgb(60, 94, 202);
+  text-decoration: none;
+}
+
 
 /* body
 -----------------------------------------------------------------------------*/
@@ -16,13 +21,25 @@ body {
   width: 100%;
 }
 
-
+td{
+  padding: 3px 14px;
+}
 
 .content{
-  position: absolute;
   top: 24px;
-  left: 300px;
+  flex:1 800px;
+  padding:30px;
+}
 
+.navigation{
+  flex: 0 176px;
+  font-size: 1rem;
+  padding-top: 35px;
+  padding-left: 34px;
+}
+
+.navigation li{
+  margin:10px;
 }
 
 .new_line { 
@@ -34,15 +51,13 @@ body {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   background-color: #FFFFFF;
-  width: 700px;
-  height: 400px;
   opacity: 1;
   border: 16px solid #FFFFFF;
   border-radius: 24px;
-  -webkit-border-radius: 24px;
-  -moz-border-radius: 24px;
-  -ms-border-radius: 24px;
-  -o-border-radius: 24px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
   box-shadow: 0px -2px 51px 0px #D9D9D9;
   -webkit-box-shadow: 0px -2px 51px 0px #D9D9D9;
   -moz-box-shadow: 0px -2px 51px 0px #D9D9D9;

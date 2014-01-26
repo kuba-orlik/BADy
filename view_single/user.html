@@ -1,0 +1,35 @@
+<div ng-controller="dataController" ng-init='getSingle("api/users.php")'>
+	<h1>View user {{data.username}}</h1>
+	<table>
+		<tr>
+			<td>
+				username:
+			</td>
+			<td>
+				{{data.username}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				rank:
+			</td>
+			<td>
+				{{data.rank}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				belongs to groups:
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="group in data.groups"> 
+						<td>
+							<a href="#/groups/{{group.group_id}}">{{group.group_name}}</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
