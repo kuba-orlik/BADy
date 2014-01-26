@@ -24,6 +24,12 @@
 		</td>
 	</tr>
 	</table>
+	<h2>
+		Create new user:
+	</h2>
+	<input ng-model='params.username' placeholder='username'>
+	<input ng-model='params.password' placeholder='password' type='password'>
+	<button ng-click='post("api/actions/create_user.php", params)'>create</button>
 
 </body>
 </html>

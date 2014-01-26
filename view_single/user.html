@@ -32,4 +32,13 @@
 			</td>
 		</tr>
 	</table>
+	<h2>
+		Add to group:
+	</h2>
+	<div ng-controller="dataController" ng-init="setSource('api/groups.php'); console.log('lol'); console.log(params); ">	
+		<select ng-model='params.group_id'>
+			<option ng-repeat='group in data' value="{{group.id}}">{{group.name}}</option>
+		</select>	
+		<input type='submit' ng-click='params.user_id = $parent.data.id; post("api/actions/assign_user.php", params)'>
+	</div>	
 </div>

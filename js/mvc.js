@@ -10,6 +10,7 @@ var app = angular.module("app", ['ngResource', 'ngRoute']).config(
 			.when('/composers', {templateUrl: 'lists/composers.html'})
 			.when('/composers/:id', {templateUrl: 'view_single/composer.html'})
 			.when('/folders', {templateUrl: 'lists/folders.html'})
+			.when('/folders/:id', {templateUrl: 'view_single/folder.html'})
 			.when('/files', {templateUrl: 'lists/files.html'})
 			.when('/files/:id', {templateUrl: 'view_single/file.html'})			
 			.when('/pieces', {templateUrl: 'lists/pieces.html'})

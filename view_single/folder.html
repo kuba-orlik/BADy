@@ -1,0 +1,49 @@
+<div ng-controller="dataController" ng-init='getSingle("api/folders.php")'>
+	<h1>Folder: <i>{{data.name}}</i></h1>
+	<table>
+		<tr>
+			<td>
+				name:
+			</td>
+			<td>
+				{{data.name}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				assigned to groups:
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat='group in data.groups'>
+						<td>
+							<a href='#/groups/{{group.id}}'>{{group.name}}</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				files
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="file in data.files"> 
+						<td>
+							<a href="#/files/{{file.id}}">{{file.name}}</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<h2>assign to group</h2>
+	<div ng-controller="dataController" ng-init="setSource('api/groups.php')">	
+		<select ng-model='params.group_id'>
+			<option ng-repeat='group in data' value="{{group.id}}">{{group.name}}</option>
+		</select>	
+		<input type='text' ng-model='params.expires' placeholder='expires'>
+		<input type='submit' ng-click='params.folder_id = $parent.data.id; post("api/actions/assign_folderGroup.php", params)'>
+	</div>	
+</div>

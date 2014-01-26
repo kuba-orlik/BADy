@@ -39,6 +39,12 @@
 
 
 	</table>
+	<h2>
+		Create group:
+	</h2>
+	<input ng-model="params.group_name" placeholder="group name">
+	<button ng-click="post('api/actions/create_group.php', params)">create</button>
+
 
 </body>
 </html>

@@ -1,7 +1,10 @@
 <?php
 
+DEFINE('TABLE_NAME', 'categories');
+
 include_once("../classes/database.php");
 require_once("common.php");
+
 
 function getOne($id){
 	$unit = Database::prepareAndExecute("SELECT * FROM categories WHERE id=?", array($id));

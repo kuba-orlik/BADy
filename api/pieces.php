@@ -3,6 +3,8 @@
 include_once("../classes/database.php");
 require_once("common.php");
 
+DEFINE('TABLE_NAME', 'pieces');
+
 function getOne($id){
 	$unit = Database::prepareAndExecute("SELECT * FROM pieces WHERE id=?", array($id));
 	$query = "CALL piece_getFiles(?)";

@@ -26,6 +26,10 @@
 		</td>
 	</tr>
 	</table>
-
+	<h2>
+		Create new composer
+	</h2>
+	<input placeholder="name" ng-model='params.name'>
+	<button ng-click='post("api/actions/create_composer.php", params)'>create</button>
 </body>
 </html>

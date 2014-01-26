@@ -10,7 +10,8 @@ function extend($orig_array, $attrib_name, $query, $query_params){
 }
 
 function getAll(){
-	$ids = Database::prepareAndExecute("SELECT id FROM composers WHERE 1");
+	$ids = Database::prepareAndExecute("SELECT id FROM " . TABLE_NAME . " WHERE 1");
+	//var_dump($ids);
 	$ret = array();
 	foreach($ids AS $id){
 		$ret[]=getOne($id[0]);

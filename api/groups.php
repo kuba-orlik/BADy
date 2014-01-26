@@ -2,6 +2,8 @@
 include_once("../classes/database.php");
 require_once("common.php");
 
+DEFINE('TABLE_NAME', 'groups');
+
 function getOne($id){
 	$group = Database::prepareAndExecute("SELECT * FROM groups WHERE id=?", array($id));
 	$users = Database::prepareAndExecute("CALL group_getUsers(?)", array($id));

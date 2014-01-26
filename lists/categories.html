@@ -27,6 +27,14 @@
 		</td>
 	</tr>
 	</table>
-
+	<h2>
+		Create category:
+	</h2>
+	<input placeholder='name' ng-model='params.name'><br/>
+	parent_id:
+	<select ng-model='params.parent_id'>
+		<option ng-repeat='category in data' value='{{category.id}}'>{{category.name}}</option>
+	</select>
+	<button ng-click='post("api/actions/create_category.php", params)'>create</button>
 </body>
 </html>

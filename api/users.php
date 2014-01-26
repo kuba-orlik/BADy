@@ -2,6 +2,8 @@
 
 include_once("../classes/database.php");
 
+DEFINE('TABLE_NAME', 'users');
+
 function getUserInfo($id){
 	$user = Database::prepareAndExecute("SELECT * FROM users WHERE id=?", array($id));
 	$groups = Database::prepareAndExecute("SELECT groups.id AS group_id, groups.name AS group_name FROM users LEFT JOIN usergroup on users.id = usergroup.user_id LEFT JOIN groups ON groups.id=usergroup.group_id WHERE users.id=?", array($id));
