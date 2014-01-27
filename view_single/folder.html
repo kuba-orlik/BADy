@@ -11,6 +11,20 @@
 		</tr>
 		<tr>
 			<td>
+				Owners:
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="owner in data.owners">
+						<td>
+							<a href="#/users/{{owner.id}}">{{owner.username}}</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				assigned to groups:
 			</td>
 			<td>

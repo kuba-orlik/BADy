@@ -3,7 +3,7 @@
 <body>
 
 <div ng-controller='dataController' ng-init="setSource('api/users.php')">
-	<h2>lista uzytkownikow</h2>
+	<h2>All users:</h2>
 	<table border="1" style="border-collapse:collapse;">
 	<!-- general header row -->
 	<tr>
@@ -17,8 +17,8 @@
 		<td>
 			<table>
 				<tr ng-repeat='group in user.groups'>
-					<td>{{group.group_id}}</td> 
-					<td><a href="#/groups/{{group.group_id}}">{{group.group_name}}</a></td>
+					<!--<td>{{group.id}}</td> -->
+					<td><a href="#/groups/{{group.id}}">{{group.name}}</a></td>
 				</tr>
 			</table>
 		</td>

@@ -21,6 +21,14 @@ body {
   width: 100%;
 }
 
+tr:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+tr{
+  transition: all 200ms;
+}
+
 td{
   padding: 3px 14px;
 }

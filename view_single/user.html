@@ -25,7 +25,40 @@
 				<table>
 					<tr ng-repeat="group in data.groups"> 
 						<td>
-							<a href="#/groups/{{group.group_id}}">{{group.group_name}}</a>
+							<a href="#/groups/{{group.id}}">{{group.name}}</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Folders owned:
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="folder in data.folders_owned"> 
+						<td>
+							<a href="#/folders/{{folder.id}}">{{folder.name}}</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span ng-show='data.folders_owned.length==0'>none</span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				can access folders:
+			</td>
+			<td>
+				<table>
+					<tr ng-repeat="folder in data.folders"> 
+						<td>
+							<a href="#/folders/{{folder.id}}">{{folder.name}}</a>
 						</td>
 					</tr>
 				</table>

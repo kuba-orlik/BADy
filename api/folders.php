@@ -11,6 +11,8 @@ function getOne($id){
 	$unit = extend($unit, "files", $query, array($id));
 	$query = "CALL folder_getGroups(?)";
 	$unit = extend($unit, "groups", $query, array($id));
+	$query = "CALL folder_getOwners(?)";
+	$unit = extend($unit, "owners", $query, array($id));
 	return $unit[0];
 }
 
