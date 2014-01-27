@@ -57,6 +57,11 @@ function handleRequest(){
 					$ret['error'] = 43;
 					$ret['message'] = "no parameters specified";
 					break;
+				case "45001":
+					$ret = array();
+					$ret['error'] = '1';
+					$ret['message'] = $e->errorInfo[2];
+					break;
 				default:
 					echo $code;
 					var_dump($e);
