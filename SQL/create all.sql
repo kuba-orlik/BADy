@@ -1,20 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jan 28, 2014 at 05:51 PM
--- Server version: 5.6.12-log
--- PHP Version: 5.4.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `spiewnik`
@@ -40,12 +23,12 @@ proc_label:BEGIN
 DECLARE parent_idTEMP int;
 IF parent_idL IS NOT NULL
 THEN
-	SELECT id INTO parent_idTEMP FROM categories WHERE id=parent_idL;
-	if (SELECT coalesce(parent_idTEMP, 0))=0
-	THEN
-		SELECT "1" AS error, "incorrect parent_id" AS message;
-		LEAVE proc_label;
-	END IF;
+  SELECT id INTO parent_idTEMP FROM categories WHERE id=parent_idL;
+  if (SELECT coalesce(parent_idTEMP, 0))=0
+  THEN
+    SELECT "1" AS error, "incorrect parent_id" AS message;
+    LEAVE proc_label;
+  END IF;
 END IF;
 INSERT INTO categories (name, parent_id) VALUES (nameL, parent_idL);
 SELECT "0" AS error, "ok" AS message;
@@ -66,14 +49,14 @@ DECLARE user_exists int;
 SELECT COUNT(id) INTO piece_exists FROM pieces WHERE id=piece_idL;
 if piece_exists=0
 THEN
-	SELECT "1" AS error, "incorrect piece id" AS message;
-	LEAVE proc_label;
+  SELECT "1" AS error, "incorrect piece id" AS message;
+  LEAVE proc_label;
 END IF;
 SELECT COUNT(id) INTO user_exists FROM users WHERE id=user_idL;
 if user_exists=0
 THEN
-	SELECT "2" AS error, "incorrect user id" AS message;
-	LEAVE proc_label;
+  SELECT "2" AS error, "incorrect user id" AS message;
+  LEAVE proc_label;
 END IF;
 INSERT INTO files (piece_id, name, type) VALUES (piece_idL, file_titleL, typeL);
 SET file_id = LAST_INSERT_ID();
@@ -122,20 +105,20 @@ SET composer_exists = 1;
 SELECT id INTO composer_idTEMP FROM composers WHERE id=composer_idL;
 SELECT id INTO category_idTEMP FROM categories WHERE id=category_idL;
 if (SELECT COALESCE(composer_idTEMP, 0))=0
-	THEN SET composer_exists=0;
+  THEN SET composer_exists=0;
 END IF;
 IF (SELECT COALESCE(category_idTEMP, 0))=0
-	THEN SET category_exists = 0;
+  THEN SET category_exists = 0;
 END IF;
 IF NOT composer_exists
 THEN
-	SELECT "1" AS error, "composer does not exist" AS message;
-	LEAVE proc_label;
+  SELECT "1" AS error, "composer does not exist" AS message;
+  LEAVE proc_label;
 END IF;
 IF NOT category_exists
 THEN
-	SELECT "2" AS error, "category does not exist" AS message;
-	LEAVE proc_label;
+  SELECT "2" AS error, "category does not exist" AS message;
+  LEAVE proc_label;
 END IF;
 INSERT INTO pieces (tytul, composer_id, category_id) VALUES (titleL, composer_idL, category_idL);
 SELECT "0" AS error, "ok" as message;
@@ -158,10 +141,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `file_getVersions`(IN `param` INT)
     READS SQL DATA
 SELECT * FROM fileversions WHERE file_id=param$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `folder_addOwner`(folder_idL int, user_idL int)
+BEGIN
+  -- DECLARE EXIT HANDLER FOR  SQLSTATE '23000' SELECT "3" AS error, "user already assigned to folder" AS message;
+  INSERT INTO folderadmin VALUES(user_idL, folder_idL);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `folder_getFiles`(IN `folder_idL` INT)
     NO SQL
 SELECT * FROM files WHERE id IN(
-	SELECT folder_id FROM folderfile WHERE folder_id=folder_idL
+  SELECT folder_id FROM folderfile WHERE folder_id=folder_idL
 )$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `folder_getGroups`(IN `folder_idL` INT)
@@ -175,8 +164,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `folder_getOwners`(IN `folder_idL` I
 proc_label:BEGIN
 If (SELECT count(id)=0 FROM folders WHERE id=folder_idL)
 THEN
-	SELECT "1" AS error, "folder does not exist" AS message;
-	LEAVE proc_label;
+  SELECT "1" AS error, "folder does not exist" AS message;
+  LEAVE proc_label;
 END IF;
 SELECT user_id AS id, username FROM owners WHERE folder_id=folder_idL;
 END$$
@@ -184,16 +173,16 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `group_addFolder`(IN `group_idL` INT, IN `folder_idL` INT, IN `dateL` DATE)
     NO SQL
 proc_label:BEGIN
-DECLARE EXIT HANDLER FOR  SQLSTATE '23000' SELECT "3" AS error, "folder already assigned to that group" AS message;
+-- DECLARE EXIT HANDLER FOR  SQLSTATE '23000' SELECT "3" AS error, "folder already assigned to that group" AS message;
 if (SELECT count(id)=0 from groups WHERE id=group_idL)
 then
-	SELECT "234" AS error, "group does not exist" AS message;
-	LEAVE proc_label;
+  SELECT "234" AS error, "group does not exist" AS message;
+  LEAVE proc_label;
 end if;
 if (SELECT count(id)=0 from folders WHERE id=folder_idL)
 then
-	SELECT "235" AS error, "folder does not exist" AS message;
-	LEAVE proc_label;
+  SELECT "235" AS error, "folder does not exist" AS message;
+  LEAVE proc_label;
 end if;
 INSERT INTO foldergroup (folder_id, group_id, expires) VALUES (folder_idL, group_idL, dateL) ON DUPLICATE KEY UPDATE expires=dateL;
 SELECT "0" AS error, "ok" AS message;
@@ -205,13 +194,13 @@ label_proc:BEGIN
 DECLARE EXIT HANDLER FOR  SQLSTATE '23000' SELECT "3" AS error, "user already in group" AS message;
 if (SELECT count(id)=0 FROM users WhERE id=user_idL)
 THEN
-	SELECT "1" AS error, "incorrect user" AS message;
-	LEAVE label_proc;
+  SELECT "1" AS error, "incorrect user" AS message;
+  LEAVE label_proc;
 END IF;
 if (SELECT count(id)=0 FROM groups WhERE id=group_idL)
 THEN
-	SELECT "1" AS error, "incorrect group" AS message;
-	LEAVE label_proc;
+  SELECT "1" AS error, "incorrect group" AS message;
+  LEAVE label_proc;
 END IF;
 INSERT INTO usergroup (user_id, group_id) VALUES (user_idL, group_idL);
 SELECT "0" AS error, "ok" AS message;
@@ -224,7 +213,7 @@ SELECT folders.id AS id, folders.name AS name FROM foldergroup LEFT JOIN folders
 CREATE DEFINER=`root`@`localhost` PROCEDURE `group_getUsers`(IN `group_idL` INT)
     READS SQL DATA
 SELECT * FROM users WHERE id IN (
-	SELECT user_id FROM usergroup WHERE group_id=group_idL
+  SELECT user_id FROM usergroup WHERE group_id=group_idL
 )$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `group_removeUser`(IN `group_idL` INT, IN `user_idL` INT)
@@ -233,18 +222,18 @@ label_proc:BEGIN
 DECLARE EXIT HANDLER FOR  SQLSTATE '23000' SELECT "3" AS error, "user already in group" AS message;
 if (SELECT count(id)=0 FROM users WhERE id=user_idL)
 THEN
-	SELECT "1" AS error, "incorrect user" AS message;
-	LEAVE label_proc;
+  SELECT "1" AS error, "incorrect user" AS message;
+  LEAVE label_proc;
 END IF;
 if (SELECT count(id)=0 FROM groups WhERE id=group_idL)
 THEN
-	SELECT "1" AS error, "incorrect group" AS message;
-	LEAVE label_proc;
+  SELECT "1" AS error, "incorrect group" AS message;
+  LEAVE label_proc;
 END IF;
 if (SELECT count(user_id)=0 FROM usergroup WhERE user_id=user_idL AND group_id=group_idL)
 THEN
-	SELECT "1" AS error, "user not present in the group" AS message;
-	LEAVE label_proc;
+  SELECT "1" AS error, "user not present in the group" AS message;
+  LEAVE label_proc;
 END IF;
 DELETE FROM usergroup WHERE user_id=user_idL AND group_id=group_idL;
 SELECT "0" AS error, "ok" AS message;
@@ -267,8 +256,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `user_getFolders`(IN `user_idL` INT)
 proc_label:BEGIN
 if (SELECT count(id)=0 FROM users WHERE id=user_idL)
 THEN
-	SELECT "1" AS error, "user does not exist" AS message;
-	LEAVE proc_label;
+  SELECT "1" AS error, "user does not exist" AS message;
+  LEAVE proc_label;
 END IF;
 SELECT id, name FROM userfolder WHERE user_id=user_idL;
 END$$
@@ -278,8 +267,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `user_getFoldersOwned`(IN `user_idL`
 proc_label:BEGIN
 if (SELECT count(id)=0 FROM users WHERE id=user_idL)
 THEN
-	SELECT "1" AS error, "incorrect user" AS message;
-	LEAVE proc_label;
+  SELECT "1" AS error, "incorrect user" AS message;
+  LEAVE proc_label;
 END IF;
 SELECT * from owners WHERE user_id=user_idL;
 END$$
@@ -289,8 +278,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `user_getGroups`(IN `user_idL` INT)
 proc_label:BEGIN
 IF (SELECT count(id)=0 FROM users WHERE id=user_idL)
 THEN
-	SELECT "1" AS error, "invalid user id" AS message;
-	LEAVE proc_label;
+  SELECT "1" AS error, "invalid user id" AS message;
+  LEAVE proc_label;
 END IF;
 SELECT group_id AS id, group_name AS name FROM usergroupview WHERE user_id=user_idL;
 END$$
@@ -306,18 +295,18 @@ DECLARE current_id int;
 DECLARE ret boolean;
 SET current_id=category_id;
 label1: LOOP
-	SELECT parent_id INTO parent_idTEMP FROM categories WHERE id=current_id;
-	if (SELECT COALESCE(parent_idTEMP, 0))=0
-		THEN 
-		set ret=false;
-		LEAVE label1;
-	end if;
-	if parent_idTEMP=parent_idL
-		THEN 
-		set ret=true;
-		LEAVE label1;
-	end if;
-	SET current_id=parent_idTEMP;
+  SELECT parent_id INTO parent_idTEMP FROM categories WHERE id=current_id;
+  if (SELECT COALESCE(parent_idTEMP, 0))=0
+    THEN 
+    set ret=false;
+    LEAVE label1;
+  end if;
+  if parent_idTEMP=parent_idL
+    THEN 
+    set ret=true;
+    LEAVE label1;
+  end if;
+  SET current_id=parent_idTEMP;
 END loop label1;
 return ret;
 END$$
@@ -365,7 +354,7 @@ DECLARE msg VARCHAR(255);
 SELECT lcase(NEW.name) INTO new_name;
 if(SELECT new_name LIKE "%kurw%" OR new_name LIKE "%fajn%" OR new_name LIKE "%chuj%" OR new_name LIKE "%zajeb%" OR new_name LIKE "%jebn%")
 then
-	set msg = "the category name you provided is against the rules";
+  set msg = "the category name you provided is against the rules";
     SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = msg;
 end if;
 
@@ -409,7 +398,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   `type` varchar(12) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `piece_id` (`piece_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `files`
@@ -431,7 +420,10 @@ INSERT INTO `files` (`id`, `piece_id`, `name`, `type`) VALUES
 (13, 1, 'oooooooo', 'oooooo'),
 (17, 1, '23', '23'),
 (18, 1, '23', '23'),
-(19, 1, '23', '23');
+(19, 1, '23', '23'),
+(20, 1, '0', 'pdf'),
+(21, 1, '0', 'pdf'),
+(22, 1, '0', 'pdf');
 
 -- --------------------------------------------------------
 
@@ -450,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `fileversions` (
   PRIMARY KEY (`id`),
   KEY `file_id` (`file_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `fileversions`
@@ -466,7 +458,29 @@ INSERT INTO `fileversions` (`id`, `file_id`, `download_amount`, `location`, `tim
 (8, NULL, 0, 'origjpowiugrpiuh', '2014-01-25 19:38:12', 1, 1),
 (9, 13, 0, 'oooooooo', '2014-01-25 19:41:00', 1, 1),
 (11, 18, 0, '23', '2014-01-26 11:50:29', 1, 1),
-(12, 19, 0, '23', '2014-01-26 11:51:08', 1, 1);
+(12, 19, 0, '23', '2014-01-26 11:51:08', 1, 1),
+(13, 20, 0, 'alty.pdf', '2014-01-30 18:41:30', 1, 1),
+(14, 21, 0, 'alty.pdf', '2014-01-30 18:41:33', 1, 1),
+(15, 22, 0, 'alty.pdf', '2014-01-30 18:47:13', 3, 0),
+(16, 1, 0, '', '2014-01-30 19:44:16', 3, 0),
+(17, 1, 0, '', '2014-01-30 19:44:52', 1, 1);
+
+--
+-- Triggers `fileversions`
+--
+DROP TRIGGER IF EXISTS `potwierdzenie`;
+DELIMITER //
+CREATE TRIGGER `potwierdzenie` BEFORE INSERT ON `fileversions`
+ FOR EACH ROW begin
+  if (SELECT rank<500 FROM users WHERE id=NEW.user_id)
+  THEN
+    SET NEW.potwierdzony = 0;
+  else
+    SET NEW.potwierdzony = 1;
+  END IF;
+END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -529,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `foldergroup` (
 --
 
 INSERT INTO `foldergroup` (`folder_id`, `group_id`, `expires`) VALUES
-(1, 1, '2014-01-28'),
+(1, 1, '2012-03-03'),
 (1, 2, '2012-03-03'),
 (1, 3, '2014-04-04'),
 (1, 9, '2014-04-04');
@@ -682,7 +696,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `rank` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `users`
@@ -694,7 +708,8 @@ INSERT INTO `users` (`id`, `username`, `password_hash`, `rank`) VALUES
 (3, 'groovy354', 'zupa', 0),
 (4, 'bash-sh', 'handsome', 0),
 (7, 'bash-sh2', 'handsome', 0),
-(8, 'hamster', 'a dentist', 0);
+(8, 'hamster', 'a dentist', 0),
+(9, 'nowy_nieistniejacy', 'haslohaslo', 0);
 
 -- --------------------------------------------------------
 
