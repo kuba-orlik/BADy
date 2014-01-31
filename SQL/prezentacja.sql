@@ -8,7 +8,7 @@ SELECT * FROM users;
 -- wyświetlanie grup, od których należy dany użytkownik
 
 -- --użytkownik istnieje:
-		CALL user_getGroups(1);
+		CALL user_getGroups(12);
 
 -- --użytkownik nie istnieje (błąd):
 		CALL user_getGroups(354);
@@ -17,13 +17,13 @@ SELECT * FROM users;
 -- utworzenie pliku
 
 -- -- utworzenie przez użytkownika o wysokiej randze
-	CALL create_file(1, 1, 'alty', 'alty.pdf', 'pdf');
+	CALL create_file(12, 1, 'opracowanie', 'opracowanie.pdf', 'pdf');
 	SELECT * FROM fileversions;
 --	jak widać, nowo utworzony plik jest automatycznie oznaczony jako "potwierdzony"
 
 -- --przez użytkownika o niskiej randze
 	SELECt * FROM users WHERE rank=0;
-	CALL create_file(3, 1, 'alty', 'alty.pdf', 'pdf');
+	CALL create_file(15, 1, 'opracowanie2', 'opracowanie2.pdf', 'pdf');
 	SELECT * FROM fileversions;
 --	jak widać, nowo utworzony plik jest oznaczony jako "wymagający potwierdzenia"
 
@@ -38,10 +38,12 @@ SELECT * FROM users;
 -- zczytanie utworów należących do danej kategorii, a także do wszystkich podkategorii danej kategorii (STRUKTURA DRZEWIASTA WOW)
 	CALL category_getPieces(1);
 
+
 -- stworzenie niecenzuralnej/trywialnej nazwy kategorii
 	CALL create_category("fajne", NULL); -- rzuca Wyjątek :3
 
--- dodanie folderu do grupy
+-- dodanie folderu do grupy 
+id_gr, id_folder
 	CALL group_addFolder(1, 1, '2014-03-03');
 
 -- teraz dodamy folder do grupy, ale z nieaktualną datą ważności 
@@ -53,11 +55,11 @@ SELECT * FROM users;
 -- demonstracja triggera na potwierdzanie plików
 
 SELECT * FROM users; -- szukamy użytkownika o rankingu <500
-INSERT INTO fileversions (file_id, user_id) VALUES (1, 3);
+INSERT INTO fileversions (file_id, user_id) VALUES (1, 14);
 SELECT * FROM fileversions; -- najnowszy plik jest niepotwierdzony
 
 SELECT * FROM users; -- szukamy użytkownika o rankingu >500
-INSERT INTO fileversions (file_id, user_id) VALUES (1, 1);
+INSERT INTO fileversions (file_id, user_id) VALUES (1, 13);
 SELECT * FROM fileversions; -- najnowszy plik jest potwierdzony
 
 
