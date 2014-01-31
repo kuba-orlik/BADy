@@ -17,8 +17,8 @@
 		<td>{{file.piece_id}}</td>
 		<td><a href="#/files/{{file.id}}">{{file.name}}</a></td>
 		<td>{{file.type}}</td>
-		<td>
-			<!--<table>
+		<!--<td>
+			<table>
 				<tr>
 					<td>{{file.piece[0].id}}</td>
 					<td>{{file.piece[0].tytul}}</td>
@@ -36,10 +36,32 @@
 					<td>{{version.user_id}}</td>
 					<td>{{version.potwierdzony}}</td>
 				</tr>
-			</table>-->
-		</td>
+			</table>
+		</td>-->
 	</tr>
 	</table>
+	<h2>
+		Create file:
+	</h2>
+	<div ng-controller="dataController" ng-init="setSource('api/users.php'); ">	
+		as user:
+		<select ng-model='params.user_id'>
+			<option ng-repeat='user in data' value="{{user.id}}">{{user.username}}</option>
+		</select>	<br/>
+		for piece:
+		<div ng-controller="dataController" ng-init="setSource('api/pieces.php'); ">
+			<select ng-model='$parent.params.piece_id'>
+				<option ng-repeat='piece in data' value="{{piece.id}}">{{piece.tytul}}</option>
+			</select>	
+		</div>
+		<br/>
+		<input type='text' ng-model='params.file_title' placeholder="file title"><br/>
+		<input type='text' ng-model='params.filename' placeholder='filename'><br/>
+		<input type='text' ng-model='params.filetype' placeholder='filetype'><br/>
+		{{params}}
+		<input type='submit' ng-click='post("api/actions/create_file.php", params)'>
+	</div>	
+
 
 </body>
 </html>

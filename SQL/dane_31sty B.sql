@@ -1,4 +1,8 @@
+DROP DATABASE spiewnik;
 
+CREATE database spiewnik;
+
+use spiewnik;
 
 DELIMITER $$
 --
