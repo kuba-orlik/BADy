@@ -1,12 +1,12 @@
-DROP DATABASE spiewnik;
-
-CREATE database spiewnik;
-
-use spiewnik;
+--
+-- Database: `spiewnik`
+--
+CREATE DATABASE IF NOT EXISTS `spiewnik` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `spiewnik`;
 
 DELIMITER $$
 --
--- Procedury
+-- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `category_getPieces`(IN `param` INT)
     READS SQL DATA
@@ -40,7 +40,7 @@ INSERT INTO composers (name) VALUES (nameL);
 SELECT "0" AS error, "ok" AS message;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_file`(IN `user_idL` INT, IN `piece_idL` INT, IN `file_titleL` INT, IN `filenameL` TEXT, IN `typeL` VARCHAR(10))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_file`(IN `user_idL` INT, IN `piece_idL` INT, IN `file_titleL` TEXT, IN `filenameL` TEXT, IN `typeL` VARCHAR(10))
 proc_label:BEGIN
 DECLARE file_id int;
 DECLARE piece_exists int;
@@ -284,7 +284,7 @@ SELECT group_id AS id, group_name AS name FROM usergroupview WHERE user_id=user_
 END$$
 
 --
--- Funkcje
+-- Functions
 --
 CREATE DEFINER=`root`@`localhost` FUNCTION `category_hasParent`(`category_id` INT, `parent_idL` INT) RETURNS tinyint(1)
     READS SQL DATA
@@ -315,7 +315,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `categories`
+-- Table structure for table `categories`
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 --
--- Zrzut danych tabeli `categories`
+-- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`, `parent_id`) VALUES
@@ -352,7 +352,7 @@ INSERT INTO `categories` (`id`, `name`, `parent_id`) VALUES
 (28, 'Jamaica SKA', 17);
 
 --
--- Wyzwalacze `categories`
+-- Triggers `categories`
 --
 DROP TRIGGER IF EXISTS `trywialneLubWulgarne`;
 DELIMITER //
@@ -374,7 +374,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `composers`
+-- Table structure for table `composers`
 --
 
 CREATE TABLE IF NOT EXISTS `composers` (
@@ -384,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `composers` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
--- Zrzut danych tabeli `composers`
+-- Dumping data for table `composers`
 --
 
 INSERT INTO `composers` (`id`, `name`) VALUES
@@ -410,7 +410,7 @@ INSERT INTO `composers` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `files`
+-- Table structure for table `files`
 --
 
 CREATE TABLE IF NOT EXISTS `files` (
@@ -420,12 +420,21 @@ CREATE TABLE IF NOT EXISTS `files` (
   `type` varchar(12) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `piece_id` (`piece_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`id`, `piece_id`, `name`, `type`) VALUES
+(5, 1, 'nuty_bas.pdf', 'pdf'),
+(6, 1, 'opracowanie', 'pdf'),
+(7, 1, 'opracowanie2', 'pdf');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `fileversions`
+-- Table structure for table `fileversions`
 --
 
 CREATE TABLE IF NOT EXISTS `fileversions` (
@@ -439,10 +448,19 @@ CREATE TABLE IF NOT EXISTS `fileversions` (
   PRIMARY KEY (`id`),
   KEY `file_id` (`file_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
--- Wyzwalacze `fileversions`
+-- Dumping data for table `fileversions`
+--
+
+INSERT INTO `fileversions` (`id`, `file_id`, `download_amount`, `location`, `time_created`, `user_id`, `potwierdzony`) VALUES
+(5, 5, 0, 'bas.pdf', '2014-01-31 09:00:36', 34, 0),
+(6, 6, 0, 'opracowanie.pdf', '2014-01-31 09:22:43', 12, 1),
+(7, 7, 0, 'opracowanie2.pdf', '2014-01-31 09:22:59', 15, 0);
+
+--
+-- Triggers `fileversions`
 --
 DROP TRIGGER IF EXISTS `potwierdzenie`;
 DELIMITER //
@@ -461,7 +479,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `folderadmin`
+-- Table structure for table `folderadmin`
 --
 
 CREATE TABLE IF NOT EXISTS `folderadmin` (
@@ -471,10 +489,17 @@ CREATE TABLE IF NOT EXISTS `folderadmin` (
   KEY `folder_id` (`folder_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `folderadmin`
+--
+
+INSERT INTO `folderadmin` (`user_id`, `folder_id`) VALUES
+(12, 1);
+
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `folderfile`
+-- Table structure for table `folderfile`
 --
 
 CREATE TABLE IF NOT EXISTS `folderfile` (
@@ -488,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `folderfile` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `foldergroup`
+-- Table structure for table `foldergroup`
 --
 
 CREATE TABLE IF NOT EXISTS `foldergroup` (
@@ -499,22 +524,36 @@ CREATE TABLE IF NOT EXISTS `foldergroup` (
   KEY `group_id` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `foldergroup`
+--
+
+INSERT INTO `foldergroup` (`folder_id`, `group_id`, `expires`) VALUES
+(1, 13, '2014-03-03');
+
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `folders`
+-- Table structure for table `folders`
 --
 
 CREATE TABLE IF NOT EXISTS `folders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `folders`
+--
+
+INSERT INTO `folders` (`id`, `name`) VALUES
+(1, 'teczka na koncert');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `groups`
+-- Table structure for table `groups`
 --
 
 CREATE TABLE IF NOT EXISTS `groups` (
@@ -524,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
--- Zrzut danych tabeli `groups`
+-- Dumping data for table `groups`
 --
 
 INSERT INTO `groups` (`id`, `name`) VALUES
@@ -538,7 +577,7 @@ INSERT INTO `groups` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Zastąpiona struktura widoku `owners`
+-- Stand-in structure for view `owners`
 --
 CREATE TABLE IF NOT EXISTS `owners` (
 `folder_id` int(11)
@@ -550,7 +589,7 @@ CREATE TABLE IF NOT EXISTS `owners` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `pieces`
+-- Table structure for table `pieces`
 --
 
 CREATE TABLE IF NOT EXISTS `pieces` (
@@ -564,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `pieces` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
--- Zrzut danych tabeli `pieces`
+-- Dumping data for table `pieces`
 --
 
 INSERT INTO `pieces` (`id`, `tytul`, `composer_id`, `category_id`) VALUES
@@ -591,7 +630,7 @@ INSERT INTO `pieces` (`id`, `tytul`, `composer_id`, `category_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Zastąpiona struktura widoku `userfolder`
+-- Stand-in structure for view `userfolder`
 --
 CREATE TABLE IF NOT EXISTS `userfolder` (
 `user_id` int(11)
@@ -602,7 +641,7 @@ CREATE TABLE IF NOT EXISTS `userfolder` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `usergroup`
+-- Table structure for table `usergroup`
 --
 
 CREATE TABLE IF NOT EXISTS `usergroup` (
@@ -613,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `usergroup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Zrzut danych tabeli `usergroup`
+-- Dumping data for table `usergroup`
 --
 
 INSERT INTO `usergroup` (`user_id`, `group_id`) VALUES
@@ -640,7 +679,7 @@ INSERT INTO `usergroup` (`user_id`, `group_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Zastąpiona struktura widoku `usergroupview`
+-- Stand-in structure for view `usergroupview`
 --
 CREATE TABLE IF NOT EXISTS `usergroupview` (
 `group_id` int(11)
@@ -651,7 +690,7 @@ CREATE TABLE IF NOT EXISTS `usergroupview` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -661,10 +700,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `rank` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 
 --
--- Zrzut danych tabeli `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password_hash`, `rank`) VALUES
@@ -685,12 +724,14 @@ INSERT INTO `users` (`id`, `username`, `password_hash`, `rank`) VALUES
 (31, 'macut', '23w1w1', 342),
 (33, 'adam2121', 'alamakota', 101),
 (34, 'evildevil', '531eadadaeraedeawe', 124),
-(36, 'pajujo', '201921230', 492);
+(36, 'pajujo', '201921230', 492),
+(37, 'nowy_nieistniejacy', 'haslohaslo', 0),
+(38, 'groovy354', 'asdgsadga', 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktura widoku `owners`
+-- Structure for view `owners`
 --
 DROP TABLE IF EXISTS `owners`;
 
@@ -699,7 +740,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struktura widoku `userfolder`
+-- Structure for view `userfolder`
 --
 DROP TABLE IF EXISTS `userfolder`;
 
@@ -708,65 +749,65 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struktura widoku `usergroupview`
+-- Structure for view `usergroupview`
 --
 DROP TABLE IF EXISTS `usergroupview`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `usergroupview` AS select `groups`.`id` AS `group_id`,`groups`.`name` AS `group_name`,`users`.`username` AS `username`,`users`.`id` AS `user_id` from ((`groups` left join `usergroup` on((`usergroup`.`group_id` = `groups`.`id`))) left join `users` on((`users`.`id` = `usergroup`.`user_id`)));
 
 --
--- Ograniczenia dla zrzutów tabel
+-- Constraints for dumped tables
 --
 
 --
--- Ograniczenia dla tabeli `categories`
+-- Constraints for table `categories`
 --
 ALTER TABLE `categories`
   ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`);
 
 --
--- Ograniczenia dla tabeli `files`
+-- Constraints for table `files`
 --
 ALTER TABLE `files`
-  ADD CONSTRAINT `files_ibfk_1` FOREIGN KEY (`piece_id`) REFERENCES `pieces` (`id`);
+  ADD CONSTRAINT `files_ibfk_1` FOREIGN KEY (`piece_id`) REFERENCES `pieces` (`id`) ON DELETE NO ACTION;
 
 --
--- Ograniczenia dla tabeli `fileversions`
+-- Constraints for table `fileversions`
 --
 ALTER TABLE `fileversions`
   ADD CONSTRAINT `fileversions_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`),
   ADD CONSTRAINT `fileversions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Ograniczenia dla tabeli `folderadmin`
+-- Constraints for table `folderadmin`
 --
 ALTER TABLE `folderadmin`
   ADD CONSTRAINT `folderadmin_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `folderadmin_ibfk_2` FOREIGN KEY (`folder_id`) REFERENCES `folders` (`id`);
 
 --
--- Ograniczenia dla tabeli `folderfile`
+-- Constraints for table `folderfile`
 --
 ALTER TABLE `folderfile`
   ADD CONSTRAINT `folderfile_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`),
   ADD CONSTRAINT `folderfile_ibfk_2` FOREIGN KEY (`folder_id`) REFERENCES `folders` (`id`);
 
 --
--- Ograniczenia dla tabeli `foldergroup`
+-- Constraints for table `foldergroup`
 --
 ALTER TABLE `foldergroup`
   ADD CONSTRAINT `foldergroup_ibfk_1` FOREIGN KEY (`folder_id`) REFERENCES `folders` (`id`),
   ADD CONSTRAINT `foldergroup_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
 
 --
--- Ograniczenia dla tabeli `pieces`
+-- Constraints for table `pieces`
 --
 ALTER TABLE `pieces`
   ADD CONSTRAINT `pieces_ibfk_1` FOREIGN KEY (`composer_id`) REFERENCES `composers` (`id`),
   ADD CONSTRAINT `pieces_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 
 --
--- Ograniczenia dla tabeli `usergroup`
+-- Constraints for table `usergroup`
 --
 ALTER TABLE `usergroup`
   ADD CONSTRAINT `usergroup_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
